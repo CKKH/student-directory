@@ -24,7 +24,10 @@ end
 
 def print_student_details(students)
   students.each.with_index(1) do |student, index|
-    puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name].start_with?("C")
+      puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+    else
+    end
   end
 end
 

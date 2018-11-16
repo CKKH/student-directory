@@ -1,6 +1,6 @@
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
+  puts "Please enter the name of the student".center(175)
+  puts "To finish, just hit return twice".center(175)
   # create an empty array
   students = []
   # get the first name
@@ -9,7 +9,8 @@ def input_students
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
+#hobbies: :coding, country_of_birth: :UK, height: :height
+    puts "Now we have #{students.count} students".center(175)
     #get another name from the user
     name = gets.chomp
   end
@@ -18,22 +19,21 @@ def input_students
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(175)
+  puts "-------------".center(175, " ")
 end
 
-=begin
 def print_student_details(students)
   students.each.with_index(1) do |student, index|
     if student[:name].length < 12
-      puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)"
+      puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort)".center(175)
     else
     end
   end
 end
-=end
 
-# rewrite the each() print_student_details method using while loop & control flow
+=begin
+each() print_student_details method using while loop & control flow
 def print_student_details(students)
   index_position = 0
   student_array = []
@@ -48,17 +48,10 @@ def print_student_details(students)
     end
   end
 end
-
-#def print_student_details(students)
-#  counter = 0
-#  while counter <= students.count do
-#    puts "#{counter + 1}. #{students[:name]} (#{students[:cohort]} cohort)"
-#    counter += 1
-#  end
-#end
+=end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students"
+  puts "Overall, we have #{students.count} great students".center(175)
 end
 
 students = input_students
@@ -66,3 +59,17 @@ students = input_students
 print_header
 print_student_details(students)
 print_footer(students)
+
+=begin
+def request_student_info
+  puts "Please enter the name of the student"
+  name = gets.chomp
+  puts "Please enter their hobbies"
+  hobbies = gets.chomp
+  puts "Please enter their country of birth"
+  country_of_birth = gets.chomp
+  puts "Please enter height"
+  name = gets.chomp
+  puts "To finish, just hit return twice"
+end
+=end

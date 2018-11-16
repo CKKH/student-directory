@@ -13,7 +13,11 @@ def input_students
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, language: language, hobby: hobby, cohort: cohort}
-    puts "Now we have #{students.count} students".center(175)
+    if students.count == 1
+      puts "Now we have #{students.count} student".center(175)
+    else
+      puts "Now we have #{students.count} students".center(175)
+    end
     # get next student details from the user unless no input entered
     puts "Please enter the name of the next student, or to quit, enter no input".center(175)
     name = gets.chomp
@@ -44,7 +48,11 @@ def print_student_details(students)
 end
 
 def print_footer(students)
-  puts "Overall, we have #{students.count} great students".center(175)
+  if students.count == 1
+    puts "Overall, we have #{students.count} great student".center(175)
+  else
+    puts "Overall, we have #{students.count} great students".center(175)
+  end
 end
 
 students = input_students

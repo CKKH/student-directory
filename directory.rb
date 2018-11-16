@@ -1,15 +1,19 @@
 def input_students
-  puts "Please enter the name of the student".center(175)
   # get the first set of student details
+  puts "Please enter the name of the student".center(175)
   name = gets.chomp
   puts "Please enter student's favourite programming language".center(175)
   language = gets.chomp
   puts "Please enter student's favourite hobby".center(175)
   hobby = gets.chomp
+  # list possible cohorts as symbols in array
+  group = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
   puts "Please enter student's cohort".center(175)
-  cohort = gets.chomp
+  cohort = gets.chomp.capitalize.to_sym
+  cohort = :Unknown unless group.include?(cohort)
+  # empty overall student array
   students = []
-  # while the name is not empty, repeart this code
+  # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
     students << {name: name, language: language, hobby: hobby, cohort: cohort}
@@ -18,10 +22,10 @@ def input_students
     else
       puts "Now we have #{students.count} students".center(175)
     end
-    # get next student details from the user unless no input entered
-    puts "Please enter the name of the next student, or to quit, enter no input".center(175)
-    name = gets.chomp
-    if name.empty? == true
+    # get next student details from the user unless quit entered
+    puts "Please enter the name of the next student, or press enter to finish".center(175)
+    name = gets.chomp.downcase
+    if name == ""
       break
     else
       puts "Please enter student's favourite programming language".center(175)
@@ -29,7 +33,8 @@ def input_students
       puts "Please enter student's favourite hobby".center(175)
       hobby = gets.chomp
       puts "Please enter student's cohort".center(175)
-      cohort = gets.chomp
+      cohort = gets.chomp.capitalize.to_sym
+      cohort = :Unknown unless group.include?(cohort)
     end
   end
   #return the array of input_students

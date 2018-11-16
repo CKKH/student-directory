@@ -6,12 +6,13 @@ def input_students
   language = gets.chomp
   puts "Please enter student's favourite hobby".center(175)
   hobby = gets.chomp
-  # create an empty array
+  puts "Please enter student's cohort".center(175)
+  cohort = gets.chomp
   students = []
   # while the name is not empty, repeart this code
   while !name.empty? do
     # add the student hash to the array
-    students << {name: name, language: language, hobby: hobby, cohort: :november}
+    students << {name: name, language: language, hobby: hobby, cohort: cohort}
     puts "Now we have #{students.count} students".center(175)
     # get next student details from the user unless no input entered
     puts "Please enter the name of the next student, or to quit, enter no input".center(175)
@@ -23,6 +24,8 @@ def input_students
       language = gets.chomp
       puts "Please enter student's favourite hobby".center(175)
       hobby = gets.chomp
+      puts "Please enter student's cohort".center(175)
+      cohort = gets.chomp
     end
   end
   #return the array of input_students

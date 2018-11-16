@@ -22,6 +22,7 @@ def print_header
   puts "-------------"
 end
 
+=begin
 def print_student_details(students)
   students.each.with_index(1) do |student, index|
     if student[:name].length < 12
@@ -30,6 +31,31 @@ def print_student_details(students)
     end
   end
 end
+=end
+
+# rewrite the each() print_student_details method using while loop & control flow
+def print_student_details(students)
+  index_position = 0
+  student_array = []
+  while index_position <= students.count do
+    student_array << students[index_position]
+    student_hash = student_array[index_position]
+    if student_hash == nil
+      break
+    else
+      puts "#{index_position + 1}. #{student_hash[:name]} (#{student_hash[:cohort]} cohort)"
+      index_position += 1
+    end
+  end
+end
+
+#def print_student_details(students)
+#  counter = 0
+#  while counter <= students.count do
+#    puts "#{counter + 1}. #{students[:name]} (#{students[:cohort]} cohort)"
+#    counter += 1
+#  end
+#end
 
 def print_footer(students)
   puts "Overall, we have #{students.count} great students"

@@ -1,3 +1,10 @@
+def interactive_menu
+  # 1. print the menu and ask the user what to do
+  # 2. read the input and save it into a variable
+  # 3. do what the user has asked
+  # 4. repeat from step 1
+end
+
 def input_students
   # get the first set of student details
   puts "Please enter the name of the student".center(175)
@@ -74,9 +81,10 @@ def print_footer(students)
 end
 
 students = input_students
+print_header
 # print student information if student array isn't empty
 if !students.empty?
-  print_header
   print_student_details(students)
+  #print_cohort_groups
 end
 print_footer(students)

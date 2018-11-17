@@ -74,8 +74,9 @@ def print_footer(students)
 end
 
 students = input_students
-# nothing happens until we call the methods
-print_header
-# print_student_details(students)
-print_cohort_groups(students)
+# print student information if student array isn't empty
+if !students.empty?
+  print_header
+  print_student_details(students)
+end
 print_footer(students)

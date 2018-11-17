@@ -43,16 +43,29 @@ end
 
 def print_header
   puts "The students of Villains Academy".center(175)
-  puts "-------------".center(175, " ")
+  puts "-------------".center(175)
 end
 
 def print_student_details(students)
   students.each.with_index(1) do |student, index|
       puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort), favourite programming language: #{student[:language]}, favourite hobby: #{student[:hobby]}".center(175)
   end
+ end
+
+def print_cohort_groups(students)
+  groups = students.map { |student| student[:cohort] }.uniq
+  groups.each do |cohort|
+    puts "#{cohort} cohort: ".center(175)
+    students.each do |student|
+      if student[:cohort] == cohort
+        puts student[:name].center(175)
+      end
+    end
+  end
 end
 
 def print_footer(students)
+  puts "-------------".center(175)
   if students.count == 1
     puts "Overall, we have #{students.count} great student".center(175)
   else
@@ -63,5 +76,6 @@ end
 students = input_students
 # nothing happens until we call the methods
 print_header
-print_student_details(students)
+# print_student_details(students)
+print_cohort_groups(students)
 print_footer(students)

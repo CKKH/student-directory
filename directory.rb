@@ -1,15 +1,15 @@
 def input_students
   # get the first set of student details
   puts "Please enter the name of the student".center(175)
-  name = gets.chomp
+  name = gets.sub(/\n/, '')
   puts "Please enter student's favourite programming language".center(175)
-  language = gets.chomp
+  language = gets.sub(/\n/, '')
   puts "Please enter student's favourite hobby".center(175)
-  hobby = gets.chomp
+  hobby = gets.sub(/\n/, '')
   # list possible cohorts as symbols in array
   group = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
   puts "Please enter student's cohort".center(175)
-  cohort = gets.chomp.capitalize.to_sym
+  cohort = gets.sub(/\n/, '').capitalize.to_sym
   cohort = :Unknown unless group.include?(cohort)
   # empty overall student array
   students = []
@@ -24,16 +24,16 @@ def input_students
     end
     # get next student details from the user unless quit entered
     puts "Please enter the name of the next student, or press enter to finish".center(175)
-    name = gets.chomp.downcase
+    name = gets.sub(/\n/, '').downcase
     if name == ""
       break
     else
       puts "Please enter student's favourite programming language".center(175)
-      language = gets.chomp
+      language = gets.sub(/\n/, '')
       puts "Please enter student's favourite hobby".center(175)
-      hobby = gets.chomp
+      hobby = gets.sub(/\n/, '')
       puts "Please enter student's cohort".center(175)
-      cohort = gets.chomp.capitalize.to_sym
+      cohort = gets.sub(/\n/, '').capitalize.to_sym
       cohort = :Unknown unless group.include?(cohort)
     end
   end

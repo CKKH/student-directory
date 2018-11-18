@@ -1,8 +1,26 @@
 def interactive_menu
-  # 1. print the menu and ask the user what to do
-  # 2. read the input and save it into a variable
-  # 3. do what the user has asked
-  # 4. repeat from step 1
+  students = []
+  loop do
+    # 1. print the menu and ask the user what to do
+    puts "1. Input the students"
+    puts "2. Show the students"
+    puts "9. Exit"
+    # 2. read the input and save it into a variable
+    selection = gets.chomp
+    # 3. do what the user has asked
+    case selection
+    when "1"
+      students = input_students
+    when "2"
+      print_header
+      print_student_details(students)
+      print_footer(students)
+    when "9"
+      exit # this will cause the program to terminate
+    else
+      puts "I don't know what you meant, try again"
+    end
+  end
 end
 
 def input_students
@@ -60,6 +78,7 @@ def print_student_details(students)
     end
   else
     puts "No student information available".center(175)
+  end
  end
 
 def print_cohort_groups(students)
@@ -76,12 +95,14 @@ end
 
 def print_footer(students)
   puts "-------------".center(175)
+  if students.count == 1
     puts "Overall, we have #{students.count} great student".center(175)
   else
     puts "Overall, we have #{students.count} great students".center(175)
   end
 end
 
+interactive_menu
 students = input_students
 print_header
 # print student information if student array isn't empty

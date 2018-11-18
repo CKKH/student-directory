@@ -54,9 +54,12 @@ def print_header
 end
 
 def print_student_details(students)
-  students.each.with_index(1) do |student, index|
+  if !students.empty?
+    students.each.with_index(1) do |student, index|
       puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort), favourite programming language: #{student[:language]}, favourite hobby: #{student[:hobby]}".center(175)
-  end
+    end
+  else
+    puts "No student information available".center(175)
  end
 
 def print_cohort_groups(students)
@@ -73,7 +76,6 @@ end
 
 def print_footer(students)
   puts "-------------".center(175)
-  if students.count == 1
     puts "Overall, we have #{students.count} great student".center(175)
   else
     puts "Overall, we have #{students.count} great students".center(175)
@@ -83,8 +85,6 @@ end
 students = input_students
 print_header
 # print student information if student array isn't empty
-if !students.empty?
-  print_student_details(students)
-  #print_cohort_groups
-end
+print_student_details(students)
+#print_cohort_groups
 print_footer(students)

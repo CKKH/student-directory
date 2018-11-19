@@ -11,7 +11,7 @@ end
 def interactive_menu
   loop do
     print_menu
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -34,17 +34,17 @@ end
 
 def input_students
   puts "Please enter the name of the first student, or press enter to finish".center(115)
-  name = gets.chomp
+  name = STDIN.gets.chomp
   # while name is not empty, repeat this code
   while !name.empty? do
     puts "Please enter student's favourite programming language".center(115)
-    language = gets.chomp
+    language = STDIN.gets.chomp
     puts "Please enter student's favourite hobby".center(115)
-    hobby = gets.chomp
+    hobby = STDIN.gets.chomp
     # list possible cohorts as symbols in array
     cohort_groups = [:January, :February, :March, :April, :May, :June, :July, :August, :September, :October, :November, :December]
     puts "Please enter student's cohort".center(115)
-    cohort = gets.chomp.capitalize.to_sym
+    cohort = STDIN.gets.chomp.capitalize.to_sym
     cohort = :Unknown unless cohort_groups.include?(cohort)
     # add the student hash to the array
     @students << {name: name, language: language, hobby: hobby, cohort: cohort}
@@ -55,8 +55,15 @@ def input_students
     end
     # get next student details from the user or quits
     puts "Please enter the name of the next student, or press enter to finish".center(115)
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
+end
+
+def show_students
+  print_header
+  print_student_details
+  # print_cohort_groups
+  print_footer
 end
 
 def print_header
@@ -95,13 +102,6 @@ def print_footer
   end
 end
 
-def show_students
-  print_header
-  print_student_details
-  # print_cohort_groups
-  print_footer
-end
-
 def save_students
   # open the file for writing
   file = File.open("students.csv", "w")
@@ -114,8 +114,8 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
@@ -123,4 +123,17 @@ def load_students
   file.close
 end
 
+def try_load_students
+  filename = ARGV.first
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+try_load_students
 interactive_menu

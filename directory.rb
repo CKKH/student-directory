@@ -21,11 +21,16 @@ end
 
 def process(selection)
   case selection
-    when "1" then input_students
-    when "2" then show_students
-    when "3" then save_students
-    when "4" then load_students
-    when "9" then exit
+    when "1" then puts "Entering input student mode..."
+      input_students
+    when "2" then puts "Displaying Villains Academy student records..."
+      show_students
+    when "3" then puts "Villains Academy student records saved"
+      save_students
+    when "4" then puts "Villains Academy student records loaded"
+      load_students
+    when "9" then puts "Exiting program"
+      exit
     else puts "I don't know what you meant, try again"
   end
 end
@@ -44,6 +49,7 @@ def input_students
     # loop continues until user chooses to exit input mode
     request_student_name_or_exit_input_mode
   end
+  puts "Exiting input mode..."
 end
 
 def show_students

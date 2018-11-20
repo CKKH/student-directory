@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = []
 @name = ""
 @language = ""
@@ -22,20 +24,20 @@ end
 def process(selection)
   case selection
     when "1" then puts "Entering input student mode..."
-      input_students
+      input_new_student_records
     when "2" then puts "Displaying Villains Academy student records..."
-      show_students
+      show_student_records
     when "3" then puts "Villains Academy student records saved"
       save_students
     when "4" then puts "Villains Academy student records loaded"
       load_students
-    when "9" then puts "Exiting program"
+    when "9" then puts "Exiting program..."
       exit
     else puts "I don't know what you meant, try again"
   end
 end
 
-def input_students
+def input_new_student_records
   # gets first student name from user or allows them to exit input mode
   request_student_name_or_exit_input_mode
   # if name is provided, repeats this code
@@ -43,7 +45,7 @@ def input_students
     # gets student favourite programming language, hobby and cohort from user input
     get_student_info
     # add the student information as hash to the array
-    build_student_list
+    build_student_record
     # print student count after each loop completes
     print_student_count
     # loop continues until user chooses to exit input mode
@@ -52,9 +54,9 @@ def input_students
   puts "Exiting input mode..."
 end
 
-def show_students
+def show_student_records
   print_header
-  print_student_details
+  print_student_records
   # print_cohort_groups
   print_footer
 end
@@ -64,7 +66,7 @@ def print_header
   puts "-------------".center(115)
 end
 
-def print_student_details
+def print_student_records
   if !@students.empty?
     @students.each.with_index(1) do |student, index|
       puts "#{index}. #{student[:name]} (#{student[:cohort]} cohort), favourite programming language: #{student[:language]}, favourite hobby: #{student[:hobby]}".center(115)
@@ -105,7 +107,7 @@ def get_student_info
   @cohort = :Unknown unless cohort_groups.include?(@cohort)
 end
 
-def build_student_list
+def build_student_record
   @students << {name: @name, language: @language, hobby: @hobby, cohort: @cohort.to_sym}
 end
 
@@ -116,23 +118,20 @@ end
 
 def save_students
   # open the file for writing
-  file = File.open("students.csv", "w")
-  # iterate over the array of students
-  @students.each do |student|
-    student_data = [student[:name], student[:language], student[:hobby], student[:cohort]]
-    csv_line = student_data.join(", ")
-    file.puts csv_line
+  CSV.open("student_records.csv", "w") do |csv_line|
+  # iterate over the array of students, pushing each student record hash into an array
+    @students.each do |student|
+      student_data = [student[:name], student[:language], student[:hobby], student[:cohort]]
+      csv_line << student_data
+    end
   end
-  file.close
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    name, language, hobby, cohort = line.chomp.split(',')
-    build_student_list
+def load_students(filename = "student_records.csv")
+  CSV.foreach(filename) do |line|
+    @name, @language, @hobby, @cohort = line
+    build_student_record
   end
-  file.close
 end
 
 def try_load_students

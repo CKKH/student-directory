@@ -23,14 +23,10 @@ end
 
 def process(selection)
   case selection
-    when "1" then puts "Entering input student mode..."
-      input_new_student_records
-    when "2" then puts "Displaying Villains Academy student records..."
-      show_student_records
-    when "3" then puts "Villains Academy student records saved"
-      save_student_records
-    when "4" then puts "Villains Academy student records loaded"
-      load_student_records
+    when "1" then input_new_student_records
+    when "2" then show_student_records
+    when "3" then save_student_records
+    when "4" then load_student_records
     when "9" then puts "Exiting program..."
       exit
     else puts "I don't know what you meant, try again"
@@ -38,6 +34,7 @@ def process(selection)
 end
 
 def input_new_student_records
+  puts "Entering input student mode..."
   # gets first student name from user or allows them to exit input mode
   request_student_name_or_exit_input_mode
   # if name is provided, repeats this code
@@ -55,6 +52,7 @@ def input_new_student_records
 end
 
 def show_student_records
+  puts "Displaying Villains Academy student records..."
   print_header
   print_student_records
   # print_cohort_groups
@@ -127,6 +125,7 @@ def save_student_records
       csv_line << student_data
     end
   end
+  puts "Villains Academy student records saved"
 end
 
 def load_student_records
@@ -136,6 +135,7 @@ def load_student_records
     @name, @language, @hobby, @cohort = line
     build_student_record
   end
+  puts "Villains Academy student records loaded"
 end
 
 def student_records_file_name
@@ -145,22 +145,22 @@ def student_records_file_name
 end
 
 def try_load_students
-  if ARGV == nil
+  if ARGV.first == nil # if first argument from the command line is empty
     filename = "student_records.csv"
   else
     filename = ARGV.first
   end
-  return if filename.nil?
-  if File.exists?(filename)
+  if File.exists?(filename) # if it exists
+    CSV.foreach(filename) do |line|
+      @name, @language, @hobby, @cohort = line
+      build_student_record
+    end
     puts "Loaded #{@students.count} from #{filename}"
-    load_students(filename)
-  else
-    puts "Can't find #{filename} doesn't exist. Loading records from student_records.csv"
-    load_students
+  else # if it doesn't exist
+    puts "Sorry, #{filename} doesn't exist. Try student_records.csv"
+    exit # quit the program
   end
 end
-
-
 
 try_load_students
 interactive_menu

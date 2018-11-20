@@ -7,10 +7,10 @@ require 'csv'
 @cohort = :Unknown
 
 def print_menu
-  puts "1. Input the students"
-  puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "1. Input student details to records"
+  puts "2. Show student records"
+  puts "3. Save student records"
+  puts "4. Load student records"
   puts "9. Exit"
 end
 
@@ -28,9 +28,9 @@ def process(selection)
     when "2" then puts "Displaying Villains Academy student records..."
       show_student_records
     when "3" then puts "Villains Academy student records saved"
-      save_students
+      save_student_records
     when "4" then puts "Villains Academy student records loaded"
-      load_students
+      load_student_records
     when "9" then puts "Exiting program..."
       exit
     else puts "I don't know what you meant, try again"
@@ -116,9 +116,11 @@ def print_student_count
   puts "We have #{@students.count} great students".center(115) if @students.count != 1
 end
 
-def save_students
+def save_student_records
+  # saves filename based on user input
+  filename = student_records_file_name
   # open the file for writing
-  CSV.open("student_records.csv", "w") do |csv_line|
+  CSV.open(filename, "w") do |csv_line|
   # iterate over the array of students, pushing each student record hash into an array
     @students.each do |student|
       student_data = [student[:name], student[:language], student[:hobby], student[:cohort]]
@@ -127,24 +129,38 @@ def save_students
   end
 end
 
-def load_students(filename = "student_records.csv")
+def load_student_records
+  # loads filename based on user input
+  filename = student_records_file_name
   CSV.foreach(filename) do |line|
     @name, @language, @hobby, @cohort = line
     build_student_record
   end
 end
 
+def student_records_file_name
+  puts "Please enter student records filename, or press enter to use student_records"
+  filename = gets.chomp
+  filename == "" ? filename = "student_records.csv" : filename = filename + ".csv"
+end
+
 def try_load_students
-  filename = ARGV.first
+  if ARGV == nil
+    filename = "student_records.csv"
+  else
+    filename = ARGV.first
+  end
   return if filename.nil?
   if File.exists?(filename)
-    load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
+    load_students(filename)
   else
-    puts "Sorry, #{filename} doesn't exist."
-    exit
+    puts "Can't find #{filename} doesn't exist. Loading records from student_records.csv"
+    load_students
   end
 end
+
+
 
 try_load_students
 interactive_menu
